@@ -27,12 +27,13 @@ print("1 : spamm bot                                                            
 print("                                                                                  ")
 print("3 : ip pinger                                                     4 : password gen")
 print("                                                                                  ")
-print("5 : DDose host")
+print("5 : DDose host                                                6 : location tracker")
 
 
 
 
 userinput = input()
+
 
 
 
@@ -134,3 +135,13 @@ if userinput == "5":
     for i in range(8):
         t = Thread(target=dos)
         t.start()
+
+
+#/////////////////////////////////////////location tracer/////////////////////////////////////////////////////////////////////
+
+
+if userinput == "6":
+    command = "start https://www.iplocation.net"
+    subprocess.Popen(command)
+    
+    
