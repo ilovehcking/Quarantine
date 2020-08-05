@@ -9,6 +9,10 @@ import subprocess
 import argparse
 import socket
 from threading import Thread
+import webbrowser
+import sys
+from datetime import datetime
+
 
 
 print('''
@@ -28,6 +32,8 @@ print("                                                                         
 print("3 : ip pinger                                                     4 : password gen")
 print("                                                                                  ")
 print("5 : DDose host                                                6 : location tracker")
+print("                                                                                  ")
+print("7 : port scanner")
 
 
 
@@ -72,7 +78,7 @@ if userinput == "1":
 if userinput == "3":
     ip_to_check = input("ip to ping:\n->")
 
-    os.system('ping -n 4 {}'.format(ip_to_check))
+    os.system('ping -t {}'.format(ip_to_check))
 
 
 #///////////////////////////////////////////////////password gen////////////////////////////////////////////////////////////////////
@@ -116,6 +122,8 @@ if userinput == "2":
 
 if userinput == "5":
     host = input("witch ip:\n-> ")
+    packed = input("how many packets:\n->")
+    packed = int(packed)
     ip = socket.gethostbyname(host)
     port = 80
     print("attcking ..." + ip)
@@ -132,7 +140,7 @@ if userinput == "5":
                 print("error")
             mysocket.close()
 
-    for i in range(8):
+    for i in range(packed):
         t = Thread(target=dos)
         t.start()
 
@@ -141,7 +149,39 @@ if userinput == "5":
 
 
 if userinput == "6":
-    command = "start https://www.iplocation.net"
-    subprocess.Popen(command)
+    webbrowser.open("https://www.iplocation.net")
     
+
+#///////////////////////////////////////////////port scanner////////////////////////////////////////////////////////////////////
     
+if userinput == "7":
+    target = input("witch ip:\n->")
+    targetIP = socket.gethostbyname(target)
+    print("dont wait to long there are 65,535 existng ports")
+    time.sleep(2)
+    print("scan starting...")
+
+    tstart = datetime.now()
+
+    try:
+        for p in range(1, 65535):
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            res = sock.connect_ex((targetIP, p))
+            if res == 0:
+                print("open port  " + str(p))
+            sock.close()
+    except Exception:
+        print("There was an error.")
+        sys.exit()
+
+    tend = datetime.now()
+    diff = tend - tstart
+
+    print("Scan completed in " + str(diff))
+
+
+try:
+  os.system('pause')  #windows, doesn't require enter
+except whatever_it_is:
+  os.system('read -p "Press any key to continue"')
+
